@@ -6,7 +6,6 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Bienvenido a <%= title %></p>
-    <p>El portal donde podrá crear sus propios juegos!</p>
+    <p>Welcome to <%= title %></p>
   </body>
 </html>
