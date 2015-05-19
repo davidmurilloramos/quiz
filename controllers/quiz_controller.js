@@ -12,6 +12,20 @@ exports.new = function(req,res){
 
   res.render('quizes/new', {quiz: quiz, errors: []});
 };
+
+//GET /quizes
+exports.index=function(req, res) {
+  if(req.query.search) {
+    models.Quiz.findAll({where: ["pregunta like ?", "%"+req.query.search.replace(/ /g, "%")+"%"], order: "pregunta"}).then(function(quizes) {
+      res.render('quizes/index', {quizes: quizes, errors: []});
+    }).catch(function(error) {next(error);});
+  } else {
+    models.Quiz.findAll().then(function(quizes) {
+      res.render('quizes/index', {quizes: quizes, errors: []});
+    }).catch(function(error) {next(error);});
+  }
+}
+
 // POST /quizes/create
 exports.create = function(req, res) {
   var quiz = models.Quiz.build( req.body.quiz);
