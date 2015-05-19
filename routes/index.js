@@ -28,6 +28,10 @@ router.post('/quizes/create',              sessionController.loginRequired, quiz
 router.get('/quizes/:quizId(\\d+)/edit',   sessionController.loginRequired, quizController.edit);
 router.put('/quizes/:quizId(\\d+)',        sessionController.loginRequired, quizController.update);
 router.delete('/quizes/:quizId(\\d+)',     sessionController.loginRequired, quizController.destroy);
+// Definición de ruta de autor
+router.get("/author", function(req, res) {
+	res.render("author", {errors: []});
+});
 
 // Definición de rutas de comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
