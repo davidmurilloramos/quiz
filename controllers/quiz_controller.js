@@ -1,4 +1,14 @@
 var models=require("../models/models.js");
+exports.ownershipRequired=function(req, res, next){
+  var objQuizOwner = req.quiz.UserId;
+  var logUser = req.session.user.id;
+  var isAdmin = req.session.user.isAdmin;
+  if(isAdmin || objQuizOwner === logUser){
+    next();
+  } else{
+    res.redirect('/');
+  }
+};
 
 // Autoload -factoriza el código si ruta incluye :quizId
 exports.load=function(req, res, next, quizId) {
