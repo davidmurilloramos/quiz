@@ -1,7 +1,9 @@
 <table>
-	<%var nCommentedQuizes=quizes-commentedQuizes%>
+	<%var nCommentedQuizes=quizes-commentedQuizes;%>
+	<%var nMed=comments/quizes; nMed=nMed.toFixed(2);%>
 	<tr><td>Número de preguntas: <%=quizes%></td></tr>
 	<tr><td>Número de comentarios: <%=comments%></td></tr>
+	<tr><td>Número medio de comentarios por pregunta: <%=nMed%></td></tr>
 	<tr><td>Número de preguntas con comentarios: <%=commentedQuizes%></td></tr>
 	<tr><td>Número de preguntas sin comentarios: <%=nCommentedQuizes%></td></tr>
 	
