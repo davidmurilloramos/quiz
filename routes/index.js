@@ -30,7 +30,7 @@ router.post('/quizes/create',              sessionController.loginRequired, quiz
 router.get('/quizes/:quizId(\\d+)/edit',   sessionController.loginRequired, quizController.edit);
 router.put('/quizes/:quizId(\\d+)',        sessionController.loginRequired, quizController.update);
 router.delete('/quizes/:quizId(\\d+)',     sessionController.loginRequired, quizController.destroy);
-
+// Definición de rutas de cuenta
 router.get('/user', userController.new);
 router.post('/user', userController.create);
 router.get('/user/:userId(\\d+)/edit',sessionController.loginRequired, userController.edit);

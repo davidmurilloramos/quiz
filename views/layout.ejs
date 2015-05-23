@@ -18,11 +18,11 @@
 <div id="page-wrap">
   <header class="main" id="h1">
     <%if(!session.user){%>
-      <span class="rigth"><a href="/login"> Login </a> <a href="/user"> Sign up </a> </span>
+      <span class="rigth"><a href="/login"> Login </a>- <a href="/user"> Sign up </a> </span>
     <%}else{%>
       <span class="rigth"><%=session.user.username%>
-      <a href="/user/"+<%=session.user.id%>+"/edit">settings</a>
-      <a href="/logout">Logout</a>
+      -<a href="/user/<%=session.user.id%>/edit">settings</a>
+      -<a href="/logout">Logout</a>
    </span>
     <%}%>
     
