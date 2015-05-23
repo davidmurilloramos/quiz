@@ -31,7 +31,7 @@ app.use(function(req,res,next){
     req.session.redir='/';
   } 
   
-  if(!req.path.match(/\/login|\/logout/)) {
+  if(!req.path.match(/\/login|\/logout|\/user|\/user|\/:userId(\\d+)|\/:userId(\\d+)\/edit/)) {
     req.session.redir=req.path;
   
   }
