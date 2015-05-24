@@ -28,12 +28,18 @@ exports.answer=function(req, res) {
 
 //GET /quizes
 exports.index=function(req, res) {
+    var options={};
+    if(req.user) {
+       // req.user es creado por autoload de usuario
+       // si la ruta lleva el pará .quizId
+       options.where={UserId: req.user.id};
+    }
   if(req.query.search) {
     models.Quiz.findAll({where: ["pregunta like ?", "%"+req.query.search.replace(/ /g, "%")+"%"], order: "pregunta"}).then(function(quizes) {
       res.render('quizes/index', {quizes: quizes, errors: []});
     }).catch(function(error) {next(error);});
   } else {
-    models.Quiz.findAll().then(function(quizes) {
+    models.Quiz.findAll(options).then(function(quizes) {
       res.render('quizes/index', {quizes: quizes, errors: []});
     }).catch(function(error) {next(error);});
   }
