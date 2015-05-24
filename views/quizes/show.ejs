@@ -10,9 +10,10 @@
 <%for(index in quiz.Comments){%>
 	<%if(quiz.Comments[index].publicado){%>
 		<p>- <%=quiz.Comments[index].texto%>
-			<%if(session.user && (session.user.isAdmin || (session.user && quiz.UserId === session.user.id))){%>
+	<%} else {
+			if(session.user && (session.user.isAdmin || (quiz.UserId===session.user.id))){%>
+			    <p>- <%=quiz.Comments[index].texto%>
 				<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.Comments[index].id%>/publish"><button>Publicar</button></a>
-			<%}%>
-		</p>
-	<%}%>	
+			<%}
+	}%>	
 <%}%>

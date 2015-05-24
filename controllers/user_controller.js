@@ -1,15 +1,5 @@
 var models = require('../models/models.js');
 
-exports.ownershipRequired=function(req, res, next){
-  var objUser = req.user.id;
-  var logUser = req.session.user.id;
-  var isAdmin = req.session.user.isAdmin;
-  if(isAdmin || objUser === logUser){
-    next();
-  } else{
-    res.redirect('/');
-  }
-};
 // Autoload :userId
 exports.load = function(req, res, next, userId) {
 	models.User.find({
@@ -42,7 +32,7 @@ exports.autenticar = function(login, password, callback){
 
 //GET /user/:id/edit
 exports.edit = function(req,res){
-	res.render('user/edit', {user: req.user, errors:[]});
+	res.render('user/edit', {user: req.user, redir:req.session.redir.toString(), errors:[]});
 };			//req.user: instancia de user cargada con Autoload
 
 //PUT /user/:id
@@ -59,7 +49,10 @@ exports.update = function(req, rex, next) {
 			} else {
 				req.user 	//save: guarda campo username y password en la BD
 				.save ( {fields: ["username","password"]})
-				.then( function(){res.redirect('/');});
+				.then( function(){
+					req.session.user={id: req.user.id, username: req.user.username, isAdmin: req.user.isAdmin};
+					res.redirect(req.session.redir.toString());
+				});
 			}	// Redirecci´on HTTP a /
 		}
 	).catch(function(error){next(error)});
@@ -70,7 +63,7 @@ exports.new = function(req,res) {
 	var user = models.User.build( // crea objeto user
 			{username:"", password: ""}
 		);
-	res.render('user/new', {user: user, errors: [] });
+	res.render("user/new", {user: user, redir:req.session.redir.toString(), errors: []});
 };
 
 // POST /user
@@ -88,7 +81,7 @@ exports.create = function(req,res){
 				.save({fields: ["username", "password"]})
 				.then( function(){
 					//crea la sesion con el usuario ya autenticado y redirige a /
-					req.session.user = {id:user.id, username:user.username};
+					req.session.user = {id:user.id, username:user.username, isAdmin: user.isAdmin};
 					res.redirect('/');
 				});
 			}
@@ -104,3 +97,18 @@ exports.destroy = function(req, res) {
 		res.redirect('/');
 	}).catch(function(error){next(error)});
 };
+
+// MW que permite acciones solamente si el usuario objeto
+// pertenece al usuario logeado o si es cuenta admin
+exports.ownershipRequired=function(req, res, next) {
+	var objUser=req.user.id;
+	var logUser=req.session.user.id;
+	var isAdmin=req.session.user.isAdmin;
+	if(isAdmin || objUser===logUser) {
+		next();
+	} else {
+		res.redirect(req.session.redir.toString());
+	}
+ }; 
+
+

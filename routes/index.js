@@ -27,9 +27,9 @@ router.get('/quizes/:quizId(\\d+)',        quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 router.get('/quizes/new', 				   sessionController.loginRequired, quizController.new);
 router.post('/quizes/create',              sessionController.loginRequired, quizController.create);
-router.get('/quizes/:quizId(\\d+)/edit',   sessionController.loginRequired, userController.ownershipRequired, quizController.edit);
-router.put('/quizes/:quizId(\\d+)',        sessionController.loginRequired, userController.ownershipRequired, quizController.update);
-router.delete('/quizes/:quizId(\\d+)',     sessionController.loginRequired, userController.ownershipRequired, quizController.destroy);
+router.get('/quizes/:quizId(\\d+)/edit',   sessionController.loginRequired, quizController.ownershipRequired, quizController.edit);
+router.put('/quizes/:quizId(\\d+)',        sessionController.loginRequired, quizController.ownershipRequired, quizController.update);
+router.delete('/quizes/:quizId(\\d+)',     sessionController.loginRequired, quizController.ownershipRequired, quizController.destroy);
 // Definición de rutas de cuenta
 router.get('/user', userController.new);
 router.post('/user', userController.create);
@@ -48,7 +48,7 @@ router.get("/author", function(req, res) {
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',    commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', 
-	                                    sessionController.loginRequired, userController.ownershipRequired, commentController.publish);
+	                                    sessionController.loginRequired, commentController.ownershipRequired, commentController.publish);
 
 
 module.exports = router;
